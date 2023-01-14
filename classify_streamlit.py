@@ -22,7 +22,7 @@ output = st.container()
 
 # streamlit body
 with header:
-    st.title("Classifcation Algorithm")
+    st.title("Classification Algorithm")
     st.text("")
 
 with st.sidebar:
@@ -61,7 +61,7 @@ print("Accuracy on test set: {:.3f}".format(nb.score(X_test_NB, y_test_NB)))
 prob = nb.predict_proba(X_test_NB)
 prob = prob[:,1]
 auc = roc_auc_score(y_test_NB, prob) 
-print('AUC: %.2f' % auc)
+a = ('AUC: %.2f' % auc)
 
 
 y_RF = df_le_class['partOfDay']
@@ -89,4 +89,8 @@ print('AUC: %.2f' % auc)
 with output:
     st.header("Output")
     st.text("The following are the rules created based on ARM.")
+    
+    write(a)
+    
+    write(b)
     
