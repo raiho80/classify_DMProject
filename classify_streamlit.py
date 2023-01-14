@@ -30,7 +30,7 @@ with st.sidebar:
         "Minimum length", min_value=0, max_value=2, value=2)
 
 
-df_le_class = pd.read_csv("dataset_classify")
+df_le_class = pd.read_csv("dataset_classify.csv")
 
 y_NB = df_le_class['getDrinks']
 X_NB = df_le_class[['TimeSpent_minutes', 'Hour', 'Temp_celsius', 'Wind_kmph', 'Humidity_percent']]
