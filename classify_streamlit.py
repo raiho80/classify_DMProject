@@ -55,13 +55,13 @@ nb.fit(X_train_NB, y_train_NB)
 nb_pred = nb.predict(X_test_NB)
 
 # Calculate the overall accuracy on test set 
-print("Accuracy on test set: {:.3f}".format(nb.score(X_test_NB, y_test_NB)))
+a = ("Accuracy on test set: {:.3f}".format(nb.score(X_test_NB, y_test_NB)))
 
 #Calculate AUC
 prob = nb.predict_proba(X_test_NB)
 prob = prob[:,1]
 auc = roc_auc_score(y_test_NB, prob) 
-a = ('AUC: %.2f' % auc)
+b = ('AUC: %.2f' % auc)
 
 
 y_RF = df_le_class['partOfDay']
@@ -88,9 +88,8 @@ print('AUC: %.2f' % auc)
 
 with output:
     st.header("Output")
-    st.text("The following are the rules created based on ARM.")
+    st.text("The following are the accuracy and AUC for Naive Bayes")
     
     st.write(a)
-    
     st.write(b)
     
