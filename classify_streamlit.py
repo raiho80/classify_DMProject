@@ -43,6 +43,8 @@ with st.sidebar:
 
 df_le_class = pd.read_csv("dataset_classify.csv")
 
+## Naive Bayes Classifier
+
 y_NB = df_le_class['getDrinks']
 X_NB = df_le_class[['TimeSpent_minutes', 'Hour', 'Temp_celsius', 'Wind_kmph', 'Humidity_percent']]
     
@@ -63,6 +65,19 @@ prob = prob[:,1]
 auc = roc_auc_score(y_test_NB, prob) 
 b = ('AUC: %.2f' % auc)
 
+fpr_NB, tpr_NB, thresholds_NB = roc_curve(y_test_NB, prob) # fpr=false positive rate, tpr=true positive rate
+
+figNB = plt.plot(fpr_NB, tpr_NB, color='blue', label='NB') 
+figNB = plt.plot([0, 1], [0, 1], color='green', linestyle='--')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver Operating Characteristic (ROC) Curve')
+plt.legend()
+
+
+
+
+## Random Forest Classifier
 
 y_RF = df_le_class['partOfDay']
 X_RF = df_le_class[['Humidity_percent', 'Wind_kmph', 'Weather', 'Temp_celsius', 'Laundry_count',
@@ -87,9 +102,9 @@ auc = roc_auc_score(y_test_RF, prob)
 print('AUC: %.2f' % auc)
 
 with output:
-    st.header("Output")
-    st.text("The following are the accuracy and AUC for Naive Bayes")
+    st.header("Naive Bayes")
+    st.text("Below are results from Naive Bayes Classifier")
     
     st.write(a)
     st.write(b)
-    
+    st.pyplot(fig=figNB.figure, clear_figure=None)
