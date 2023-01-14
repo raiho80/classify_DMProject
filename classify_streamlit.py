@@ -26,21 +26,6 @@ with header:
     st.title("Classification Algorithm")
     st.text("")
 
-with st.sidebar:
-    st.header("Parameters to manipulate")
-
-    supp_slider = st.slider(
-        "Minimum support", min_value=0.0, max_value=0.035, value=0.035, step = 0.005)
-
-    conf_slider = st.slider(
-        "Minimum confidence", min_value=0.0, max_value=0.2, value=0.2)
-
-    lift_slider = st.slider(
-        "Minimum lift", min_value=2, max_value=3, value=3)
-
-    length_slider = st.slider(
-        "Minimum length", min_value=0, max_value=2, value=2)
-
 
 df_le_class = pd.read_csv("dataset_classify.csv")
 
@@ -94,19 +79,34 @@ rf.fit(X_train_RF, y_train_RF)
 y_pred = rf.predict(X_test_RF)
 
 # Calculate the overall accuracy on test set 
-print("Accuracy on test set: {:.3f}".format(rf.score(X_test_RF, y_test_RF)))
+c = ("Accuracy on test set: {:.3f}".format(rf.score(X_test_RF, y_test_RF)))
 
 # Calculate AUC
 # your codes here... 
 prob = rf.predict_proba(X_test_RF)
 prob = prob[:,1]
 auc = roc_auc_score(y_test_RF, prob) 
-print('AUC: %.2f' % auc)
+d = ('AUC: %.2f' % auc)
+
+fpr_RF, tpr_RF, thresholds_RF = roc_curve(y_test_RF, y_pred) # fpr=false positive rate, tpr=true positive rate
+
+plt.figure(figsize = (10,5))
+figRF = sns.lineplot(fpr_RF, tpr_RF, color='red', label='RF') 
+figRF = sns.lineplot([0, 1], [0, 1], color='green', linestyle='--')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver Operating Characteristic (ROC) Curve')
+plt.legend()
 
 with output:
     st.header("Naive Bayes")
-    st.text("Below are results from Naive Bayes Classifier")
-    
+    st.text("Determine if customers will get a drink or not depending on time spent, time of the day and weather of the day. Use to properly plan vending machines and drink stations.")
     st.write(a)
     st.write(b)
     st.pyplot(fig=figNB.figure, clear_figure=None)
+
+    st.header("Random Forest")
+    st.text("Determine which part of the day most customers will visit the laundry mart, depending on weather conditions, number of laundry marts, customer age and total time spent. Use for better staff management.")
+    st.write(c)
+    st.write(d)
+    st.pyplot(fig=figRF.figure, clear_figure=None)
