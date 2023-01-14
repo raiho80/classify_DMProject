@@ -90,7 +90,7 @@ with output:
     st.header("Output")
     st.text("The following are the rules created based on ARM.")
     
-    write(a)
+    st.write(a)
     
-    write(b)
+    st.write(b)
     
