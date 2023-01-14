@@ -1,7 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from apyori import apriori
 from sklearn import preprocessing
 import streamlit as st
 
