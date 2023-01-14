@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import seaborn as sns
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
@@ -67,8 +68,9 @@ b = ('AUC: %.2f' % auc)
 
 fpr_NB, tpr_NB, thresholds_NB = roc_curve(y_test_NB, prob) # fpr=false positive rate, tpr=true positive rate
 
-figNB = plt.plot(fpr_NB, tpr_NB, color='blue', label='NB') 
-figNB = plt.plot([0, 1], [0, 1], color='green', linestyle='--')
+plt.figure(figsize = (10,5))
+figNB = sns.lineplot(fpr_NB, tpr_NB, color='blue', label='NB') 
+figNB = sns.lineplot([0, 1], [0, 1], color='green', linestyle='--')
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
 plt.title('Receiver Operating Characteristic (ROC) Curve')
